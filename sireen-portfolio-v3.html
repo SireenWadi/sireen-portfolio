@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sireen Wadi — Developer · Cybersecurity Engineer · UI Architect</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --neon:#00c8ff;--lime:#aaff00;--pink:#ff2d78;--gold:#ffd700;--bg:#06080f;
+  --muted:rgba(255,255,255,.42);--font-t:'Bebas Neue',sans-serif;
+  --font-m:'Space Mono',monospace;--font-b:'DM Sans',sans-serif;--sp:7rem 4rem;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:#fff;font-family:var(--font-b);overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+#c-dot{position:fixed;z-index:9999;width:10px;height:10px;background:var(--lime);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference}
+#c-ring{position:fixed;z-index:9998;width:36px;height:36px;border:1.5px solid rgba(0,200,255,.55);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .35s,height .35s,border-color .3s}
+body:has(a:hover) #c-dot,body:has(button:hover) #c-dot{width:18px;height:18px;background:var(--neon)}
+body:has(a:hover) #c-ring,body:has(button:hover) #c-ring{width:52px;height:52px;border-color:var(--lime)}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes nameReveal{from{opacity:0;transform:translateY(60px) skewY(4deg)}to{opacity:1;transform:none}}
+@keyframes auroraPulse{from{opacity:.45;transform:scale(1)}to{opacity:1;transform:scale(1.06)}}
+@keyframes logoPop{from{box-shadow:0 0 22px rgba(170,255,0,.38),0 0 50px rgba(170,255,0,.14)}to{box-shadow:0 0 44px rgba(170,255,0,.72),0 0 90px rgba(170,255,0,.28)}}
+@keyframes blk{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes tin{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+@keyframes scanLine{0%{top:-100%}100%{top:200%}}
+@keyframes thumbIn{from{opacity:0;transform:scale(.94) translateX(-6px)}to{opacity:1;transform:none}}
+
+/* page-load stagger */
+.hero-eyebrow{animation:fadeUp .7s ease both;animation-delay:.2s;opacity:0}
+.hero-name-block{animation:nameReveal 1s cubic-bezier(.16,1,.3,1) both;animation-delay:.35s;opacity:0}
+.hero-tagline{animation:fadeUp .7s ease both;animation-delay:.8s;opacity:0}
+.hero-btns{animation:fadeUp .7s ease both;animation-delay:1s;opacity:0}
+.hero-cards{animation:fadeUp .8s ease both;animation-delay:1.15s;opacity:0}
+
+/* MESH */
+.mesh-bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,200,255,.011) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,.011) 1px,transparent 1px);background-size:64px 64px}
+
+/* SECTION BG */
+.section-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat}
+.section-bg::after{content:'';position:absolute;inset:0}
+
+/* SCROLL REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+
+/* LABELS */
+.sec-eyebrow{font-family:var(--font-m);font-size:.6rem;letter-spacing:.3em;color:var(--pink);text-transform:uppercase;margin-bottom:.65rem}
+.sec-title{font-family:var(--font-t);font-size:clamp(2.8rem,5.5vw,5.2rem);letter-spacing:.07em;color:#fff;line-height:1;margin-bottom:3.5rem}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:.85rem 3rem;
+  background:rgba(6,8,15,0.52);
+  backdrop-filter:blur(22px) saturate(180%);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  animation:fadeIn .8s ease both;animation-delay:.1s;opacity:0;
+  transition:background .3s,padding .3s;
+}
+nav.scrolled{background:rgba(6,8,15,0.82);padding:.7rem 3rem}
+/* Logo mark — replaces the old nav-num */
+.nav-logo{
+  display:flex;align-items:center;gap:.55rem;text-decoration:none;cursor:none;
+}
+.nav-logo-mark{
+  width:32px;height:32px;border-radius:6px;
+  background:linear-gradient(135deg,var(--neon),var(--lime));
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-t);font-size:.95rem;letter-spacing:.04em;
+  color:#000;font-weight:900;
+  box-shadow:0 0 16px rgba(0,200,255,.35);
+  transition:box-shadow .3s,transform .3s;
+}
+.nav-logo:hover .nav-logo-mark{
+  box-shadow:0 0 28px rgba(0,200,255,.6);
+  transform:rotate(-4deg) scale(1.05);
+}
+.nav-logo-text{
+  font-family:var(--font-m);font-size:.62rem;letter-spacing:.14em;
+  color:rgba(255,255,255,.5);text-transform:uppercase;
+  transition:color .2s;
+}
+.nav-logo:hover .nav-logo-text{color:rgba(255,255,255,.85)}
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{
+  font-family:var(--font-m);font-size:.61rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);text-decoration:none;
+  transition:color .2s;cursor:none;
+  position:relative;padding-bottom:4px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--neon);transition:width .3s ease;
+}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-indicator{display:flex;flex-direction:column;gap:5px;align-items:center}
+.nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);cursor:none;transition:background .25s,transform .25s}
+.nav-dot.active,.nav-dot:hover{background:#fff;transform:scale(1.3)}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   § 1  HERO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+#hero{
+  position:relative;min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 0 3rem 4rem;
+  overflow:hidden;
+}
+/* Hero background image */
+#hero .section-bg{
+  background-image:
+    linear-gradient(to right, rgba(6,8,15,0.82) 38%, rgba(6,8,15,0.18) 72%, rgba(6,8,15,0.10) 100%),
+    linear-gradient(to top, rgba(6,8,15,0.88) 0%, transparent 42%),
+    url('image.jpg');
+}
+#hero .section-bg::after{display:none}
+/* Aurora overlay */
+#hero .section-bg::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:
+    radial-gradient(ellipse at 65% 38%, rgba(26,90,255,0.26) 0%, transparent 52%),
+    radial-gradient(ellipse at 22% 72%, rgba(255,45,120,0.10) 0%, transparent 44%);
+  animation:auroraPulse 7s ease-in-out infinite alternate;
+}
+.hero-content{position:relative;z-index:2;max-width:600px}
+.hero-eyebrow{
+  font-family:var(--font-m);font-size:.64rem;
+  letter-spacing:.14em;color:rgba(255,255,255,.42);
+  margin-bottom:1rem;font-style:italic;
+}
+.cyber-strip{display:inline-flex;align-items:center;gap:.6rem;padding:.26rem .85rem;border-radius:3px;background:rgba(0,255,150,.04);border:1px solid rgba(0,255,150,.18);font-family:var(--font-m);font-size:.52rem;letter-spacing:.12em;color:#00ff96;margin-bottom:.7rem}
+.hero-eyebrow{font-family:var(--font-m);font-size:.64rem;letter-spacing:.14em;color:rgba(255,255,255,.4);margin-bottom:1.1rem;font-style:italic}
+
+/* NEW NAME TYPOGRAPHY */
+.hero-name-block{line-height:1;margin-bottom:.2rem}
+.hn-row-1{display:flex;align-items:center;gap:.16em}
+.hn-fill{font-family:var(--font-t);font-size:clamp(5.5rem,13vw,12rem);color:#fff;letter-spacing:.04em;line-height:.88;display:block}
+.hn-dot{width:.35em;height:.35em;background:var(--lime);border-radius:50%;display:inline-block;flex-shrink:0;box-shadow:0 0 28px rgba(170,255,0,.55),0 0 64px rgba(170,255,0,.22);animation:logoPop 2.2s ease-in-out infinite alternate;margin-top:-.04em}
+.hn-row-2{display:flex;padding-left:.88em}
+.hn-outline{font-family:var(--font-t);font-size:clamp(5.5rem,13vw,12rem);-webkit-text-stroke:2px rgba(255,255,255,.75);-webkit-text-fill-color:transparent;color:transparent;letter-spacing:.04em;line-height:.88;display:block}
+.hn-row-3{display:flex;align-items:center;gap:1rem;margin-top:.45rem}
+.hn-last{font-family:var(--font-t);font-size:clamp(1.4rem,2.6vw,2.4rem);letter-spacing:.45em;color:rgba(255,255,255,.28)}
+.hn-divider{flex:1;max-width:180px;height:1px;background:linear-gradient(to right,rgba(0,200,255,.5),transparent)}
+
+.hero-tagline{font-size:.87rem;color:rgba(255,255,255,.5);margin-top:1.4rem;font-weight:300;letter-spacing:.04em;line-height:1.82;max-width:380px}
+.hero-btns{display:flex;align-items:center;gap:1.6rem;margin-top:2.2rem;flex-wrap:wrap}
+.btn-discover{display:inline-flex;align-items:center;gap:.75rem;padding:.7rem 1.7rem;border:1.5px solid rgba(255,255,255,.62);border-radius:40px;color:#fff;text-decoration:none;font-family:var(--font-m);font-size:.7rem;letter-spacing:.08em;transition:all .38s cubic-bezier(.16,1,.3,1);cursor:none}
+.btn-discover .arr{width:28px;height:28px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;color:#000;font-size:.85rem;transition:transform .38s cubic-bezier(.16,1,.3,1),background .3s}
+.btn-discover:hover{border-color:var(--lime);color:var(--lime);transform:translateY(-3px)}
+.btn-discover:hover .arr{transform:rotate(-45deg);background:var(--lime)}
+.btn-connect{display:inline-flex;align-items:center;gap:.55rem;color:rgba(255,255,255,.52);text-decoration:none;font-family:var(--font-m);font-size:.7rem;letter-spacing:.1em;cursor:none;transition:color .2s,transform .3s}
+.btn-connect .badge{width:24px;height:24px;border-radius:50%;background:var(--neon);color:#000;font-size:.58rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:transform .3s}
+.btn-connect:hover{color:#fff;transform:translateY(-2px)}
+.btn-connect:hover .badge{transform:scale(1.2)}
+.hero-cards{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:2.6rem;margin-right:4rem}
+.hcard{background:rgba(10,14,25,.67);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(18px);padding:1.1rem 1.35rem;position:relative;overflow:hidden;transition:background .3s,transform .38s cubic-bezier(.16,1,.3,1),border-color .3s;cursor:none}
+.hcard:hover{background:rgba(18,26,48,.88);transform:translateY(-5px)}
+.hcard::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(0,200,255,.09),transparent 72%);opacity:0;transition:opacity .3s}
+.hcard:hover::before{opacity:1}
+.hcard-avatar{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.13);margin-bottom:.8rem;display:flex;align-items:center;justify-content:center;font-family:var(--font-t);font-size:1rem;color:var(--muted);transition:border-color .3s,transform .3s}
+.hcard:hover .hcard-avatar{border-color:rgba(0,200,255,.38);transform:scale(1.06)}
+.play-btn{position:absolute;top:.8rem;right:.8rem;width:22px;height:22px;border-radius:50%;border:1px solid rgba(255,255,255,.26);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.42);font-size:.5rem;transition:all .3s}
+.hcard:hover .play-btn{border-color:var(--neon);color:var(--neon)}
+.hcard-title{font-family:var(--font-t);font-size:.88rem;letter-spacing:.08em;color:#fff;margin-bottom:.32rem;transition:color .3s}
+.hcard:hover .hcard-title{color:var(--neon)}
+.hcard-desc{font-size:.71rem;color:rgba(255,255,255,.36);line-height:1.56}
+.hero-side{position:absolute;right:0;top:0;bottom:0;z-index:3;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:9px;padding:0 1rem}
+
+/* ══ PROJECTS ══ */
+#projects{position:relative;z-index:1;padding:var(--sp);overflow:hidden}
+/* solenedesjardins-sea-6553205.jpg */
+#projects .section-bg{background-image:url('solenedesjardins-sea-6553205.jpg')}
+#projects .section-bg::after{background:linear-gradient(to bottom,rgba(6,8,15,.92) 0%,rgba(6,8,15,.82) 50%,rgba(6,8,15,.92) 100%)}
+
+.acc-wrap{display:flex;flex-direction:column;gap:4px}
+.acc-item{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.022);backdrop-filter:blur(22px);border-radius:6px;overflow:hidden;transition:border-color .4s,background .4s,transform .38s cubic-bezier(.16,1,.3,1)}
+.acc-item:hover,.acc-item.open{border-color:rgba(0,200,255,.26);background:rgba(0,200,255,.04)}
+.acc-item.gold-card:hover,.acc-item.gold-card.open{border-color:rgba(255,215,0,.28);background:rgba(255,215,0,.03)}
+.acc-head{display:flex;align-items:center;gap:1.8rem;padding:1.4rem 2.2rem;cursor:none;user-select:none}
+.acc-num{font-family:var(--font-t);font-size:3.2rem;line-height:1;min-width:56px;background:linear-gradient(135deg,var(--neon),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:font-size .4s cubic-bezier(.34,1.56,.64,1);flex-shrink:0}
+.acc-item.gold-card .acc-num{background:linear-gradient(135deg,var(--gold),#ff9500);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.acc-item.open .acc-num{font-size:3.9rem}
+
+/* THUMBNAIL IN HEADER */
+.acc-thumb{width:130px;height:80px;border-radius:5px;overflow:hidden;flex-shrink:0;border:1px solid rgba(255,255,255,.1);background:#06080f;position:relative}
+.acc-thumb img{width:100%;height:100%;object-fit:cover;filter:grayscale(.6) brightness(.6);transition:filter .5s ease,transform .5s ease;display:block}
+.acc-item:hover .acc-thumb img,.acc-item.open .acc-thumb img{filter:grayscale(0) brightness(.95);transform:scale(1.07)}
+.acc-item.open .acc-thumb{border-color:rgba(0,200,255,.35);box-shadow:0 0 18px rgba(0,200,255,.2);animation:thumbIn .35s ease both}
+.acc-item.gold-card.open .acc-thumb{border-color:rgba(255,215,0,.38);box-shadow:0 0 18px rgba(255,215,0,.2)}
+.acc-thumb-badge{position:absolute;top:5px;left:5px;background:rgba(0,200,255,.9);color:#000;font-family:var(--font-m);font-size:.38rem;letter-spacing:.1em;padding:.12rem .38rem;border-radius:2px;opacity:0;transition:opacity .3s}
+.acc-item.open .acc-thumb-badge{opacity:1}
+.acc-item.gold-card .acc-thumb-badge{background:rgba(255,215,0,.92)}
+
+.acc-meta{flex:1;min-width:0}
+.acc-name{font-family:var(--font-t);font-size:1.85rem;letter-spacing:.07em;color:#fff;transition:color .3s,letter-spacing .3s;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acc-item:hover .acc-name,.acc-item.open .acc-name{color:var(--neon);letter-spacing:.1em}
+.acc-item.gold-card:hover .acc-name,.acc-item.gold-card.open .acc-name{color:var(--gold)}
+.acc-stack{font-family:var(--font-m);font-size:.56rem;color:rgba(255,255,255,.34);letter-spacing:.1em;margin-top:.28rem}
+.acc-badge-row{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
+.acc-badge{display:inline-block;padding:.1rem .52rem;border-radius:20px;border:1px solid rgba(0,200,255,.2);background:rgba(0,200,255,.06);color:var(--neon);font-family:var(--font-m);font-size:.46rem;letter-spacing:.07em}
+.acc-badge.gold{background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.24);color:var(--gold)}
+.acc-badge.green{background:rgba(0,255,150,.06);border-color:rgba(0,255,150,.2);color:#00ff96}
+.acc-arr{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.36);flex-shrink:0;font-size:1.1rem;font-weight:300;transition:all .42s cubic-bezier(.34,1.56,.64,1)}
+.acc-item:hover .acc-arr,.acc-item.open .acc-arr{border-color:var(--neon);color:var(--neon);box-shadow:0 0 18px rgba(0,200,255,.28)}
+.acc-item.open .acc-arr{transform:rotate(45deg)}
+.acc-item.gold-card:hover .acc-arr,.acc-item.gold-card.open .acc-arr{border-color:var(--gold);color:var(--gold);box-shadow:0 0 18px rgba(255,215,0,.28)}
+
+.acc-body{max-height:0;overflow:hidden;transition:max-height .72s cubic-bezier(.16,1,.3,1)}
+.acc-item.open .acc-body{max-height:960px}
+.acc-inner{padding:0 2.2rem 2.4rem}
+.acc-desc{font-size:.83rem;color:rgba(255,255,255,.46);line-height:1.88;max-width:700px;margin-bottom:2rem}
+
+/* SLIDER */
+.proj-slider{position:relative;overflow:hidden;border-radius:7px;border:1px solid rgba(255,255,255,.08);margin-bottom:2rem;background:#060c18}
+.slider-track{display:flex;transition:transform .55s cubic-bezier(.77,0,.175,1)}
+.slide{min-width:100%;aspect-ratio:16/8;overflow:hidden;position:relative}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.88);transition:filter .4s,transform 6s}
+.acc-item.open .slide img{transform:scale(1.04)}
+.slide-chrome{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;gap:5px;padding:.5rem .9rem;background:rgba(6,8,15,.7);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.06);z-index:2}
+.slide-chrome span{width:8px;height:8px;border-radius:50%}
+.slide-chrome span:nth-child(1){background:#ff5f56}
+.slide-chrome span:nth-child(2){background:#ffbd2e}
+.slide-chrome span:nth-child(3){background:#27c93f}
+.slide-label{flex:1;margin-left:.5rem;font-family:var(--font-m);font-size:.44rem;color:rgba(255,255,255,.26);letter-spacing:.08em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sl-btn{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;background:rgba(6,8,15,.72);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.6);font-size:1rem;display:flex;align-items:center;justify-content:center;cursor:none;transition:all .3s;z-index:5}
+.sl-btn:hover{background:rgba(0,200,255,.2);border-color:var(--neon);color:var(--neon)}
+.sl-prev{left:.85rem}.sl-next{right:.85rem}
+.sl-dots{position:absolute;bottom:.75rem;left:50%;transform:translateX(-50%);display:flex;gap:.45rem;z-index:5}
+.sl-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);cursor:none;transition:background .3s,transform .3s;border:none}
+.sl-dot.active{background:#fff;transform:scale(1.3)}
+.sl-counter{position:absolute;bottom:.72rem;right:.9rem;font-family:var(--font-m);font-size:.47rem;color:rgba(255,255,255,.35);letter-spacing:.1em;z-index:5}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+.live-btn{display:inline-flex;align-items:center;gap:.55rem;padding:.82rem 2rem;border:1px solid var(--neon);background:linear-gradient(135deg,rgba(0,200,255,.1),rgba(255,45,120,.06));color:var(--neon);text-decoration:none;font-family:var(--font-m);font-size:.68rem;letter-spacing:.1em;border-radius:3px;transition:all .35s cubic-bezier(.16,1,.3,1);cursor:none;box-shadow:0 0 18px rgba(0,200,255,.1)}
+.live-btn:hover{background:rgba(0,200,255,.18);box-shadow:0 0 36px rgba(0,200,255,.38);transform:translateY(-3px)}
+.gh-btn{display:inline-flex;align-items:center;gap:.55rem;padding:.82rem 2rem;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.04);color:rgba(255,255,255,.68);text-decoration:none;font-family:var(--font-m);font-size:.68rem;letter-spacing:.1em;border-radius:3px;transition:all .35s cubic-bezier(.16,1,.3,1);cursor:none}
+.gh-btn:hover{border-color:var(--lime);color:var(--lime);background:rgba(170,255,0,.06);transform:translateY(-3px)}
+.gold-btn{border-color:var(--gold)!important;color:var(--gold)!important;background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,149,0,.04))!important}
+.gold-btn:hover{background:rgba(255,215,0,.18)!important;box-shadow:0 0 36px rgba(255,215,0,.38)!important}
+
+/* ══ RESUME ══ */
+#resume{position:relative;z-index:1;padding:var(--sp);overflow:hidden}
+/* schaferle-wave-1913559_1920.jpg */
+#resume .section-bg{background-image:url('schaferle-wave-1913559_1920.jpg')}
+#resume .section-bg::after{background:linear-gradient(to bottom,rgba(6,8,15,.88) 0%,rgba(6,8,15,.78) 50%,rgba(6,8,15,.90) 100%)}
+canvas#cin-cv{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;opacity:.22}
+.dl-wrap{margin-bottom:3.2rem}
+.dl-btn{display:inline-flex;align-items:center;gap:.7rem;padding:.8rem 1.8rem;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.62);text-decoration:none;font-family:var(--font-m);font-size:.65rem;letter-spacing:.1em;border-radius:3px;cursor:none;transition:all .35s cubic-bezier(.16,1,.3,1)}
+.dl-btn:hover{border-color:var(--neon);color:var(--neon);background:rgba(0,200,255,.06);transform:translateY(-2px)}
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-bottom:3.5rem;position:relative;z-index:2}
+.glass-panel{background:rgba(255,255,255,.024);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(28px);border-radius:6px;padding:2rem 2.2rem;transition:border-color .4s,box-shadow .4s}
+.glass-panel:hover{border-color:rgba(0,200,255,.18);box-shadow:0 0 60px rgba(0,200,255,.05)}
+.panel-eyebrow{font-family:var(--font-m);font-size:.58rem;letter-spacing:.3em;color:var(--neon);text-transform:uppercase;margin-bottom:1.8rem}
+.panel-eyebrow.gold-eye{color:var(--gold)}
+.milestones{display:flex;flex-direction:column;gap:1rem}
+.mc{background:rgba(255,255,255,.022);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:1.1rem 1.3rem;transition:all .38s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--neon),transparent);opacity:0;transition:opacity .3s}
+.mc:hover::before{opacity:1}
+.mc:hover{background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.15);transform:translateX(5px)}
+.mc.gold-mc:hover{background:rgba(255,215,0,.04);border-color:rgba(255,215,0,.18)}
+.mc.gold-mc::before{background:linear-gradient(to bottom,var(--gold),transparent)}
+.mc.cyber-mc:hover{background:rgba(0,255,150,.03);border-color:rgba(0,255,150,.18)}
+.mc.cyber-mc::before{background:linear-gradient(to bottom,#00ff96,transparent)}
+.mc-badge{display:inline-block;padding:.1rem .52rem;border-radius:16px;border:1px solid rgba(0,200,255,.22);background:rgba(0,200,255,.07);color:var(--neon);font-family:var(--font-m);font-size:.46rem;letter-spacing:.1em;margin-bottom:.5rem}
+.mc-badge.gld{background:rgba(255,215,0,.08);border-color:rgba(255,215,0,.28);color:var(--gold)}
+.mc-badge.cyber{background:rgba(0,255,150,.06);border-color:rgba(0,255,150,.24);color:#00ff96}
+.mc-title{font-family:var(--font-t);font-size:1rem;letter-spacing:.07em;color:#fff;margin-bottom:.35rem}
+.mc-desc{font-size:.76rem;color:rgba(255,255,255,.38);line-height:1.7}
+.mc-reveal{max-height:0;overflow:hidden;opacity:0;font-family:var(--font-m);font-size:.6rem;line-height:1.9;color:var(--neon);letter-spacing:.06em;transition:max-height .5s,opacity .4s,margin .4s}
+.mc.gold-mc .mc-reveal{color:var(--gold)}
+.mc.cyber-mc .mc-reveal{color:#00ff96}
+.mc:hover .mc-reveal{max-height:160px;opacity:1;margin-top:.9rem}
+.pills{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:2.4rem;position:relative;z-index:2}
+.pill{padding:.44rem 1rem;border-radius:40px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);font-family:var(--font-m);font-size:.63rem;color:rgba(255,255,255,.42);cursor:none;transition:all .32s cubic-bezier(.34,1.56,.64,1)}
+.pill:hover{color:var(--g,var(--neon));border-color:var(--g,var(--neon));background:rgba(0,0,0,.42);box-shadow:0 0 22px color-mix(in srgb,var(--g,var(--neon)) 32%,transparent);transform:translateY(-4px) scale(1.06)}
+.focus-list{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;position:relative;z-index:2}
+.fc-card{background:rgba(255,255,255,.027);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:1.1rem 1.35rem;transition:all .38s cubic-bezier(.16,1,.3,1)}
+.fc-card:hover{background:rgba(0,200,255,.04);border-color:rgba(0,200,255,.18);transform:translateY(-4px)}
+.fc-t{font-family:var(--font-t);font-size:1rem;letter-spacing:.07em;color:#fff;margin-bottom:.24rem}
+.fc-d{font-size:.74rem;color:rgba(255,255,255,.35);line-height:1.62}
+
+/* ══ CONTACT ══ */
+#contact{position:relative;z-index:1;padding:var(--sp);overflow:hidden}
+/* michael_pointner-blue-9566138.jpg */
+#contact .section-bg{background-image:url('michael_pointner-blue-9566138.jpg')}
+#contact .section-bg::after{background:linear-gradient(to bottom,rgba(6,8,15,.90) 0%,rgba(6,8,15,.82) 50%,rgba(6,8,15,.94) 100%)}
+.terminal-win{max-width:820px;margin:0 auto 3.5rem;background:rgba(1,5,2,.9);border:1px solid rgba(0,200,255,.18);backdrop-filter:blur(40px);border-radius:10px;overflow:hidden;box-shadow:0 0 90px rgba(0,200,255,.05),0 40px 80px rgba(0,0,0,.65);transition:border-color .4s,box-shadow .4s;position:relative}
+.terminal-win::before{content:'';position:absolute;left:0;right:0;height:2px;background:linear-gradient(to right,transparent,rgba(0,200,255,.35),transparent);animation:scanLine 4s linear infinite;pointer-events:none;z-index:10}
+.terminal-win:hover{border-color:rgba(0,200,255,.32);box-shadow:0 0 110px rgba(0,200,255,.09),0 50px 100px rgba(0,0,0,.7)}
+.t-bar{display:flex;align-items:center;gap:.48rem;padding:.82rem 1.2rem;background:rgba(255,255,255,.018);border-bottom:1px solid rgba(0,200,255,.1)}
+.td{width:13px;height:13px;border-radius:50%}
+.td.r{background:#ff5f56}.td.y{background:#ffbd2e}.td.g{background:#27c93f}
+.t-title{flex:1;text-align:center;font-family:var(--font-m);font-size:.58rem;color:rgba(255,255,255,.28);letter-spacing:.1em}
+.t-body{padding:1.9rem 2.4rem}
+.tl{font-family:var(--font-m);font-size:.8rem;line-height:2.2;opacity:0;animation:tin .45s ease forwards}
+.tl.a1{animation-delay:.5s}.tl.a2{animation-delay:1.4s}.tl.a3{animation-delay:2.2s}.tl.a4{animation-delay:3s}.tl.a5{animation-delay:3.7s}.tl.a6{animation-delay:4.3s}
+.tp{color:var(--neon)}.tc{color:#fff}.to{color:var(--lime)}.tm{color:rgba(255,255,255,.4)}.ta{color:var(--pink);font-weight:700}.tcyber{color:#00ff96}
+.cur-blink{display:inline-block;width:8px;height:.9em;background:var(--neon);vertical-align:text-bottom;animation:blk 1s step-end infinite;margin-left:2px}
+.contact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;max-width:820px;margin:0 auto;position:relative;z-index:2}
+.contact-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.85rem;padding:2rem 1.2rem;background:rgba(255,255,255,.027);border:1px solid rgba(255,255,255,.08);border-radius:8px;text-decoration:none;cursor:none;transition:all .42s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden}
+.contact-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 100%,var(--card-glow,rgba(0,200,255,.12)),transparent 70%);opacity:0;transition:opacity .4s}
+.contact-card:hover::before{opacity:1}
+.contact-card:hover{transform:translateY(-8px) scale(1.03);border-color:var(--card-border,rgba(0,200,255,.4));box-shadow:0 16px 48px rgba(0,0,0,.5),0 0 32px var(--card-shadow,rgba(0,200,255,.18));background:rgba(255,255,255,.05)}
+.cc-linkedin{--card-glow:rgba(10,102,194,.18);--card-border:rgba(10,102,194,.5);--card-shadow:rgba(10,102,194,.22);--icon-color:#0a66c2}
+.cc-github{--card-glow:rgba(240,246,252,.12);--card-border:rgba(240,246,252,.35);--card-shadow:rgba(255,255,255,.12);--icon-color:#e6edf3}
+.cc-behance{--card-glow:rgba(23,105,255,.18);--card-border:rgba(23,105,255,.5);--card-shadow:rgba(23,105,255,.22);--icon-color:#1769ff}
+.cc-email{--card-glow:rgba(255,45,120,.15);--card-border:rgba(255,45,120,.45);--card-shadow:rgba(255,45,120,.18);--icon-color:#ff2d78}
+.contact-icon-wrap{width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:all .42s cubic-bezier(.34,1.56,.64,1);color:rgba(255,255,255,.52)}
+.contact-card:hover .contact-icon-wrap{background:rgba(255,255,255,.09);border-color:var(--card-border,rgba(0,200,255,.4));color:var(--icon-color,var(--neon));transform:scale(1.12) rotate(-6deg);box-shadow:0 0 22px var(--card-shadow,rgba(0,200,255,.18))}
+.contact-icon-wrap svg{width:26px;height:26px;fill:currentColor}
+.contact-label{font-family:var(--font-m);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.44);transition:color .3s}
+.contact-card:hover .contact-label{color:#fff}
+.contact-handle{font-family:var(--font-b);font-size:.72rem;color:rgba(255,255,255,.24);font-weight:300;transition:color .3s;text-align:center}
+.contact-card:hover .contact-handle{color:rgba(255,255,255,.6)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;text-align:center;padding:2.5rem;border-top:1px solid rgba(255,255,255,.055);background:rgba(4,6,12,.9);font-family:var(--font-m);font-size:.59rem;color:rgba(255,255,255,.28);letter-spacing:.12em}
+.footer-inner{display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap}
+footer .pk{color:var(--pink)}footer .bl{color:var(--neon)}footer .lm{color:var(--lime)}
+.footer-dot{color:rgba(255,255,255,.18)}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.contact-grid{grid-template-columns:repeat(2,1fr)}.focus-list{grid-template-columns:1fr}.resume-grid{grid-template-columns:1fr}}
+@media(max-width:768px){
+  :root{--sp:5rem 1.6rem}
+  nav{padding:.75rem 1.4rem}.nav-links{display:none}nav.scrolled{padding:.6rem 1.4rem}
+  #hero{padding:0 0 2rem 1.6rem}
+  .hero-cards{margin-right:1.6rem;grid-template-columns:1fr}
+  .hn-fill,.hn-outline{font-size:clamp(3.5rem,18vw,6.5rem)}
+  .acc-head{flex-wrap:wrap;gap:.8rem;padding:1.1rem 1.4rem}
+  .acc-thumb{width:100px;height:62px}
+  .acc-inner{padding:0 1.4rem 1.8rem}
+  .acc-num{font-size:2.4rem}
+  .acc-name{font-size:1.3rem;white-space:normal}
+  .contact-grid{grid-template-columns:repeat(2,1fr)}
+  .t-body{padding:1.4rem 1.4rem}
+  .sl-btn{width:30px;height:30px;font-size:.8rem}
+}
+@media(max-width:480px){
+  .hero-cards{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr 1fr}
+  .btn-row{flex-direction:column}.live-btn,.gh-btn{justify-content:center;width:100%}
+  .acc-thumb{display:none}
+  .hn-row-2{padding-left:.4em}
+}
+</style>
+</head>
+<body>
+<div id="c-dot"></div>
+<div id="c-ring"></div>
+<div class="mesh-bg"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-mark">SW</div>
+    <span class="nav-logo-text">Sireen&nbsp;Wadi</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#hero" class="active">Home</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-indicator">
+    <div class="nav-dot active"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+  </div>
+</nav>
+
+<!-- § 1 HERO — image.jpg -->
+<section id="hero">
+  <div class="section-bg"></div>
+  <div class="hero-content">
+    <div class="cyber-strip">
+      <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="4"/></svg>
+      Available · Open to Remote &amp; Relocation
+    </div>
+    <br> <br> <br> <br>
+    <div class="hero-eyebrow">Cybersecurity Engineer · Full-Stack Developer · UI Architect</div>
+ <br> <br> <br>
+    <!-- NEW NAME LAYOUT: SIR● / EEN (offset outline) / WADI -->
+    <div class="hero-name-block">
+      <div class="hn-row-1">
+        <span class="hn-fill">SIR</span>
+      
+        <span class="hn-outline">EEN</span>
+      </div>
+      <div class="hn-row-3">
+        <span class="hn-last">WADI</span>
+        <div class="hn-divider"></div>
+      </div>
+    </div>
+
+    <p class="hero-tagline">Crafting Digital Interfaces That Feel Alive &nbsp;·&nbsp; Engineering Secure Systems From The Ground Up</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-discover">Discover Work <span class="arr">→</span></a>
+      <a href="#contact" class="btn-connect"><span class="badge">↗</span> Let's Connect</a>
+    </div>
+  </div>
+
+  <div class="hero-cards">
+    <div class="hcard rv">
+      <div class="play-btn">▶</div>
+      <div class="hcard-avatar" style="background:linear-gradient(135deg,rgba(0,100,255,.28),rgba(255,45,120,.18))">SW</div>
+      <div class="hcard-title">We Reshape The Future</div>
+      <div class="hcard-desc">Full-stack engineering meets pixel-perfect UI craftsmanship and security-first architecture.</div>
+    </div>
+    <div class="hcard rv" style="transition-delay:.1s">
+      <div class="play-btn">▶</div>
+      <div class="hcard-avatar" style="background:linear-gradient(135deg,rgba(0,255,150,.18),rgba(0,100,255,.22))">🛡</div>
+      <div class="hcard-title">Cybersecurity Engineering</div>
+      <div class="hcard-desc">Secure-by-design systems built with ethical hacking insight and cybersecurity specialization.</div>
+    </div>
+    <div class="hcard rv" style="transition-delay:.2s">
+      <div class="play-btn">▶</div>
+      <div class="hcard-avatar" style="background:linear-gradient(135deg,rgba(255,215,0,.18),rgba(255,45,120,.14))">🏆</div>
+      <div class="hcard-title">National AI Award</div>
+      <div class="hcard-desc">1st place in the National AI Olympiad for MindSource — a child-centered AI educational platform.</div>
+    </div>
+  </div>
+  <div class="hero-side">
+    <div class="nav-dot active"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+    <div class="nav-dot"></div>
+  </div>
+</section>
+
+<!-- § 2 PROJECTS — solenedesjardins-sea-6553205.jpg -->
+<section id="projects">
+  <div class="section-bg"></div>
+  <div class="rv" style="position:relative;z-index:2">
+    <div class="sec-eyebrow">02 — Selected Work</div>
+    <h2 class="sec-title">Projects</h2>
+  </div>
+  <div class="acc-wrap" style="position:relative;z-index:2">
+
+    <!-- 01 THREADCODE — threadcode-storefront-home.jpg · 2.png · 10.png -->
+    <div class="acc-item rv" data-index="0">
+      <div class="acc-head">
+        <div class="acc-num">01</div>
+        <div class="acc-thumb">
+          <img src="threadcode-storefront-home.jpg" alt="ThreadCode preview">
+          <div class="acc-thumb-badge">LIVE</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">ThreadCode — Luxury Fashion Platform</div>
+          <div class="acc-stack">React · Next.js · Tailwind CSS · Prisma ORM · MySQL · Full-Stack E-Commerce</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge">E-Commerce</span>
+            <span class="acc-badge">Full-Stack</span>
+            <span class="acc-badge">Luxury UI</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">High-end full-stack e-commerce platform capturing luxury fashion aesthetics with premium code architecture. Every pixel crafted to reflect editorial elegance — from the dynamic product grid to a silky multi-step checkout experience. Features dynamic routing, cart state management, secure payments integration, and a design language that rivals the luxury labels it showcases.</p>
+          <div class="proj-slider" data-slider="0">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">threadcode-storefront-home.jpg · Live Homepage</div></div>
+                <img src="threadcode-storefront-home.jpg" alt="ThreadCode storefront homepage">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">threadcode-product-grid.jpg · Product Catalogue</div></div>
+                <img src="2.png" alt="ThreadCode product grid">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">threadcode-checkout-flow.jpg · Checkout Experience</div></div>
+                <img src="10.png" alt="ThreadCode checkout flow">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://thread-code-luxury-final-r7mq.vercel.app/" target="_blank" class="live-btn">Live Demo ↗</a>
+            <a href="https://github.com/SireenWadi/ThreadCode-Luxury-Final.git" target="_blank" class="gh-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 MINDSOURCE — 9.png · 6.png · 5.png -->
+    <div class="acc-item gold-card rv" data-index="1" style="transition-delay:.06s">
+      <div class="acc-head">
+        <div class="acc-num">02</div>
+        <div class="acc-thumb">
+          <img src="9.png" alt="MindSource preview">
+          <div class="acc-thumb-badge">AWARD</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">MindSource — Neural Educational AI</div>
+          <div class="acc-stack">AI Integration · React · Node.js · Child-Centered UX · Local AI Models · National Award Winner</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge gold">🏆 1st Place — National AI Olympiad</span>
+            <span class="acc-badge gold">EdTech</span>
+            <span class="acc-badge gold">AI-Powered</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">Award-winning AI-driven interactive educational platform designed for children aged 6–14. MindSource placed 1st at the National AI Olympiad — competing against university-level teams. Features emotionally adaptive UI that responds to the child's learning state, local AI integration for offline capability, and gamified learning paths that make complex subjects genuinely exciting.</p>
+          <div class="proj-slider" data-slider="1">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">mindsource-ai-dashboard.jpg · Main AI Interface</div></div>
+                <img src="9.png" alt="MindSource AI dashboard">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">mindsource-learning-interface.jpg · Interactive Lessons</div></div>
+                <img src="6.png" alt="MindSource learning interface">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">mindsource-neural-progress-map.jpg · Progress Visualization</div></div>
+                <img src="5.png" alt="MindSource neural progress map">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://cheery-pudding-2f6f80.netlify.app/" target="_blank" class="live-btn gold-btn">Live Demo ↗</a>
+            <a href="https://github.com/SireenWadi/-Neural-Interface-Emotional-OS.git" target="_blank" class="gh-btn gold-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 03 DEEP CORE INTELLIGENCE — 1q.jpg · 1.png · 2q.png -->
+    <div class="acc-item rv" data-index="2" style="transition-delay:.12s">
+      <div class="acc-head">
+        <div class="acc-num">03</div>
+        <div class="acc-thumb">
+          <img src="1q.jpg" alt="Deep Core Intelligence preview">
+          <div class="acc-thumb-badge">LIVE</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">Deep Core Intelligence — Sensory UI</div>
+          <div class="acc-stack">Next.js · Node.js · WebSockets · MySQL · Cryptography · Real-Time Intelligence</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge green">Cybersecurity</span>
+            <span class="acc-badge green">Real-Time</span>
+            <span class="acc-badge">UI/UX Web Experience</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">Real-time cybersecurity monitoring dashboard for network threat detection and vulnerability management. Ingests live traffic data, runs heuristic analysis for anomaly detection, and presents a command-center UI with instant threat alerts, cryptographic audit trails, and OSINT-fed intelligence panels. Built with WebSockets for zero-latency updates and a hardened backend architecture.</p>
+          <div class="proj-slider" data-slider="2">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">deepcore-security-dashboard.jpg · Command Center</div></div>
+                <img src="1q.jpg" alt="Deep Core security dashboard">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">deepcore-threat-monitor.jpg · Live Threat Feed</div></div>
+                <img src="1.png" alt="Deep Core threat monitor">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">deepcore-encryption-audit-panel.jpg · Audit Log</div></div>
+                <img src="2q.png" alt="Deep Core encryption panel">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://deep-core-intelligence-sensory-ui-u-three.vercel.app/" target="_blank" class="live-btn">Live Demo ↗</a>
+            <a href="https://github.com/SireenWadi" target="_blank" class="gh-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 04 NEXUSUI — Gemini_Generated_Image_ifbjpsifbjpsifbj.png · x.png · xx.png -->
+    <div class="acc-item rv" data-index="3" style="transition-delay:.18s">
+      <div class="acc-head">
+        <div class="acc-num">04</div>
+        <div class="acc-thumb">
+          <img src="Gemini_Generated_Image_ifbjpsifbjpsifbj.png" alt="NexusUI preview">
+          <div class="acc-thumb-badge">LIVE</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">CVision AI — Responsive Web Design & UI/UX </div>
+          <div class="acc-stack">React · Node.js . TypeScript · Storybook · Tailwind CSS · Figma · Radix UI&UX · Component Architecture</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge">cvision-ai-resume</span>
+            <span class="acc-badge">TypeScript</span>
+            <span class="acc-badge">Open Source</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">An AI-powered full-stack resume analysis platform and ATS optimizer featuring real-time scoring, keyword matching, and an interactive tracking dashboard</p>
+          <div class="proj-slider" data-slider="3">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">nexusui-component-library.jpg · Component Showcase</div></div>
+                <img src="qq.jpg" alt="NexusUI component library">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">nexusui-design-token-system.jpg · Token Architecture</div></div>
+                <img src="x.png" alt="NexusUI design tokens">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">nexusui-storybook-documentation.jpg · Docs Site</div></div>
+                <img src="xx.png" alt="NexusUI Storybook docs">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://cvision-ai-resume-analyzer.vercel.app/" target="_blank" class="live-btn">Live Demo ↗</a>
+            <a href="https://github.com/SireenWadi" target="_blank" class="gh-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 SMARTINBOX — w.png · ww.png · www.png -->
+    <div class="acc-item rv" data-index="4" style="transition-delay:.24s">
+      <div class="acc-head">
+        <div class="acc-num">05</div>
+        <div class="acc-thumb">
+          <img src="w.png" alt="SmartInbox preview">
+          <div class="acc-thumb-badge">LIVE</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">SmartInbox — AI Email Intelligence</div>
+          <div class="acc-stack">Next.js · AI/ML · Node.js · MySQL · Prisma ORM · WebSockets · NLP Classification</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge gold">AI-Powered</span>
+            <span class="acc-badge gold">Productivity</span>
+            <span class="acc-badge gold">SaaS</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">Intelligent email management platform that uses NLP classification and AI prioritization to transform inbox chaos into structured workflow. SmartInbox auto-categorizes messages, surfaces high-priority threads, generates smart reply suggestions, and provides a visual analytics layer showing communication patterns. Purpose-built for high-volume professionals who can't afford to miss what matters.</p>
+          <div class="proj-slider" data-slider="4">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">smartinbox-email-dashboard.jpg · Inbox View</div></div>
+                <img src="w.png" alt="SmartInbox email dashboard">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">smartinbox-ai-categorization-engine.jpg · AI Engine</div></div>
+                <img src="ww.png" alt="SmartInbox AI categorization">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">smartinbox-analytics-overview.jpg · Analytics Panel</div></div>
+                <img src="www.png" alt="SmartInbox analytics">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://youtu.be/UoWtnosF9ck" target="_blank" class="live-btn">▶ Demo Video</a>
+            <a href="https://github.com/SireenWadi" target="_blank" class="gh-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 AKL BET KITCHEN — Gemini_Generated_Image_m1gh6vm1gh6vm1gh.png · a.png · a3.png -->
+    <div class="acc-item gold-card rv" data-index="5" style="transition-delay:.30s">
+      <div class="acc-head">
+        <div class="acc-num">06</div>
+        <div class="acc-thumb">
+          <img src="Gemini_Generated_Image_m1gh6vm1gh6vm1gh.png" alt="Akl Bet Kitchen preview">
+          <div class="acc-thumb-badge">LIVE</div>
+        </div>
+        <div class="acc-meta">
+          <div class="acc-name">Akl Bet Kitchen — Digital Branding</div>
+          <div class="acc-stack">HTML · CSS · JavaScript · UI/UX Design · Digital Branding · Restaurant Website</div>
+          <div class="acc-badge-row">
+            <span class="acc-badge gold">Branding</span>
+            <span class="acc-badge gold">Web Design</span>
+            <span class="acc-badge gold">Palestinian Kitchen</span>
+          </div>
+        </div>
+        <div class="acc-arr">+</div>
+      </div>
+      <div class="acc-body">
+        <div class="acc-inner">
+          <p class="acc-desc">Akl Bet (أكل بيت) is a luxury single-page restaurant website for an authentic Palestinian home kitchen based in Subotica, Serbia. Built with pure HTML, CSS, and JavaScript — no frameworks, no dependencies. The design evokes warmth, heritage, and culinary artistry while maintaining a premium, editorial visual language — from the hero through the menu to the reservation flow.</p>
+          <div class="proj-slider" data-slider="5">
+            <div class="slider-track">
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">aklbet-hero-homepage.jpg · "From our kitchen to your table"</div></div>
+                <img src="Gemini_Generated_Image_m1gh6vm1gh6vm1gh.png" alt="Akl Bet Kitchen hero homepage">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">aklbet-menu-section.jpg · Menu &amp; Offerings</div></div>
+                <img src="a.png" alt="Akl Bet Kitchen menu section">
+              </div>
+              <div class="slide">
+                <div class="slide-chrome"><span></span><span></span><span></span><div class="slide-label">aklbet-reservation-contact.jpg · Reservation Flow</div></div>
+                <img src="a3.png" alt="Akl Bet Kitchen reservation">
+              </div>
+            </div>
+            <button class="sl-btn sl-prev">‹</button>
+            <button class="sl-btn sl-next">›</button>
+            <div class="sl-dots"><button class="sl-dot active"></button><button class="sl-dot"></button><button class="sl-dot"></button></div>
+            <div class="sl-counter">1 / 3</div>
+          </div>
+          <div class="btn-row">
+            <a href="https://homefood1.rf.gd/?i=2" target="_blank" class="live-btn gold-btn">Live Demo ↗</a>
+            <a href="https://github.com/SireenWadi" target="_blank" class="gh-btn gold-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- § 3 RESUME — schaferle-wave-1913559_1920.jpg -->
+<section id="resume">
+  <div class="section-bg"></div>
+  <canvas id="cin-cv"></canvas>
+  <div class="rv" style="position:relative;z-index:2">
+    <div class="sec-eyebrow">03 — Background</div>
+   <h2 class="sec-title">Resume</h2>
+  </div>
+  <div class="dl-wrap rv" style="position:relative;z-index:2">
+ <!--    <a href="#" class="dl-btn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download PDF Resume
+    </a>-->
+  </div>
+  <div class="resume-grid">
+    <div class="glass-panel rv" style="position:relative;z-index:2">
+      <div class="panel-eyebrow">Education &amp; Cybersecurity</div>
+      <div class="milestones">
+        <div class="mc cyber-mc">
+          <div class="mc-badge cyber">🔐 Cybersecurity Engineering</div>
+          <div class="mc-title">Cybersecurity Engineering — Current Study</div>
+          <div class="mc-desc">Advanced academic track covering network security, ethical hacking, cryptographic systems, vulnerability analysis, and secure software architecture.</div>
+          <div class="mc-reveal">→ Ethical Hacking &amp; Penetration Testing<br>→ Cryptography &amp; Secure Protocols<br>→ Network Security Architecture<br>→ Vulnerability Assessment &amp; OSINT<br>→ Secure Full-Stack Development</div>
+        </div>
+        <div class="mc rv">
+          <div class="mc-badge">Academic</div>
+          <div class="mc-title">96% GPA — Top Graduate</div>
+          <div class="mc-desc">Industrial Stream · Web Applications Specialization · Class of 2023 · Top of cohort with distinction across all technical modules.</div>
+          <div class="mc-reveal">→ Advanced Database Systems<br>→ Full-Stack Web Development<br>→ UI/UX Engineering Principles<br>→ Software Architecture Patterns</div>
+        </div>
+        <div class="mc rv">
+          <div class="mc-badge">Experience</div>
+          <div class="mc-title">4+ Years Full-Stack Development</div>
+          <div class="mc-desc">End-to-end applications from architecture to pixel-perfect UI. Active freelancer on Upwork &amp; Fiverr. Frontend &amp; backend dev at Reach Education Fund.</div>
+          <div class="mc-reveal">→ Upwork &amp; Fiverr freelancer<br>→ Frontend &amp; backend @ Reach Education Fund<br>→ Remote-first, global clients<br>→ Security-conscious development practice</div>
+        </div>
+      </div>
+    </div>
+    <div class="glass-panel rv" style="border-color:rgba(255,215,0,.12);position:relative;z-index:2">
+      <div class="panel-eyebrow gold-eye">Awards &amp; Achievements</div>
+      <div class="milestones">
+        <div class="mc gold-mc">
+          <div class="mc-badge gld">🏆 1st Place National</div>
+          <div class="mc-title">National AI Olympiad — MindSource</div>
+          <div class="mc-desc">First place for MindSource — an AI-driven educational platform for children. National recognition for innovation, AI integration, and child-centered UX excellence.</div>
+          <div class="mc-reveal">→ National-level recognition in AI<br>→ AI-powered adaptive learning<br>→ Designed for ages 6–14<br>→ Emotional UI adapting to child's state<br>→ Competed against university-level teams</div>
+        </div>
+        <div class="mc rv">
+          <div class="mc-badge">Specialty</div>
+          <div class="mc-title">Experimental UI/UX Architecture</div>
+          <div class="mc-desc">Specialist in visually ambitious interfaces — glassmorphism, clay 3D aesthetics, sensory-driven interactions, and emotional design systems.</div>
+          <div class="mc-reveal">→ Glassmorphism &amp; 3D clay styles<br>→ Framer Motion animation systems<br>→ Immersive SPA architectures<br>→ Emotional &amp; sensory-driven UI</div>
+        </div>
+        <div class="mc rv">
+          <div class="mc-badge">Availability</div>
+          <div class="mc-title">Remote-Ready · Open to Relocation</div>
+          <div class="mc-desc">Based in Palestine. Available for full-time roles, remote positions, and senior freelance projects globally. Async-first, cross-timezone collaboration.</div>
+          <div class="mc-reveal">→ Full-time remote preferred<br>→ Open to EU / global relocation<br>→ Async-first communication style<br>→ English · Arabic · (Basic Serbian)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rv" style="position:relative;z-index:2">
+    <div class="sec-eyebrow" style="margin-bottom:1.4rem">The Full Tech Stack</div>
+    <div class="pills">
+      <div class="pill" style="--g:#e34c26">HTML</div><div class="pill" style="--g:#264de4">CSS</div><div class="pill" style="--g:#f7df1e">JavaScript</div><div class="pill" style="--g:#777bb4">PHP</div><div class="pill" style="--g:#7952b3">Bootstrap</div><div class="pill" style="--g:#21759b">WordPress</div><div class="pill" style="--g:#336791">SQL / MySQL</div><div class="pill" style="--g:#61dafb">React</div><div class="pill" style="--g:#e8e8e8">Next.js</div><div class="pill" style="--g:#f059e3">Framer Motion</div><div class="pill" style="--g:#68a063">Node.js</div><div class="pill" style="--g:#38bdf8">Tailwind CSS</div><div class="pill" style="--g:#5a67d8">Prisma ORM</div><div class="pill" style="--g:#f05032">Git &amp; GitHub</div><div class="pill" style="--g:#ff2d78">UI/UX Design</div><div class="pill" style="--g:#00ff96">Cybersecurity</div><div class="pill" style="--g:#ffd700">Ethical Hacking</div><div class="pill" style="--g:#00c8ff">Glassmorphism</div>
+    </div>
+    <div class="focus-list">
+      <div class="fc-card rv"><div class="fc-t">Full-Stack Development</div><div class="fc-d">End-to-end apps — DB schema through polished frontend · Next.js · Prisma · MySQL</div></div>
+      <div class="fc-card rv" style="transition-delay:.08s"><div class="fc-t">Cybersecurity Engineering</div><div class="fc-d">Secure architecture · Ethical hacking · Vulnerability analysis · Cryptographic systems</div></div>
+      <div class="fc-card rv" style="transition-delay:.16s"><div class="fc-t">Experimental UI/UX</div><div class="fc-d">Glassmorphism · 3D aesthetics · Emotional design · Framer Motion animation systems</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- § 4 CONTACT — michael_pointner-blue-9566138.jpg -->
+<section id="contact">
+  <div class="section-bg"></div>
+  <div class="rv" style="position:relative;z-index:2">
+    <div class="sec-eyebrow">04 — Get in Touch</div>
+    <h2 class="sec-title">Contact</h2>
+  </div>
+  <div class="terminal-win rv" style="position:relative;z-index:2">
+    <div class="t-bar">
+      <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+      <div class="t-title">sireen-wadi.sh — bash — 80×24 · Cybersecurity · Full-Stack · UI</div>
+    </div>
+    <div class="t-body">
+      <div class="tl a1"><span class="tp">~/portfolio</span> <span class="tm">$</span> <span class="tc">SireenWadi.initiateContact()</span></div>
+      <div class="tl a2"><span class="to">→ Initializing secure connection protocol...</span></div>
+      <div class="tl a3"><span class="to">→ Status: <span class="ta">Available for full-time &amp; remote positions</span></span></div>
+      <div class="tl a4"><span class="tcyber">→ Specialization: <span style="color:#fff">Cybersecurity Engineering · Full-Stack · UI Architecture</span></span></div>
+      <div class="tl a5"><span class="tm">→ Location: Remote-ready · Palestine · Open to relocation</span></div>
+      <div class="tl a6"><span class="tp">~/portfolio</span> <span class="tm">$</span> <span class="tc">select preferred_gateway<span class="cur-blink"></span></span></div>
+    </div>
+  </div>
+  <div class="contact-grid rv" style="position:relative;z-index:2">
+    <a href="https://www.linkedin.com/in/sireen-wadi-b96994335/" target="_blank" class="contact-card cc-linkedin">
+      <div class="contact-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+      <span class="contact-label">LinkedIn</span><span class="contact-handle">sireen-wadi</span>
+    </a>
+    <a href="https://github.com/SireenWadi" target="_blank" class="contact-card cc-github">
+      <div class="contact-icon-wrap"><svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg></div>
+      <span class="contact-label">GitHub</span><span class="contact-handle">SireenWadi</span>
+    </a>
+    <a href="https://www.behance.net/SireenWadi" target="_blank" class="contact-card cc-behance">
+      <div class="contact-icon-wrap"><svg viewBox="0 0 24 24"><path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.485.61.41.28.733.65.96 1.12.225.47.34 1.05.34 1.73 0 .74-.17 1.36-.507 1.86-.338.5-.837.9-1.502 1.22.906.26 1.576.72 2.022 1.37.448.66.665 1.45.665 2.36 0 .75-.13 1.39-.41 1.93-.28.55-.67 1-1.16 1.35-.49.36-1.05.62-1.68.79-.63.17-1.28.25-1.95.25H0V4.49h6.938v.013zm-.588 5.48c.58 0 1.06-.14 1.44-.42.38-.28.57-.72.57-1.33 0-.34-.06-.62-.19-.84-.12-.22-.3-.4-.52-.53-.21-.13-.45-.22-.72-.27-.27-.05-.55-.08-.83-.08H3.5v3.47h2.85zm.12 5.86c.32 0 .62-.03.9-.1.29-.07.54-.19.75-.35.22-.17.39-.39.51-.67.12-.28.19-.63.19-1.05 0-.83-.23-1.43-.7-1.77-.46-.35-1.07-.52-1.82-.52H3.5v4.47h2.97zm10.498-7.33c-.4-.43-.97-.65-1.7-.65-.48 0-.88.08-1.21.25-.33.17-.6.39-.8.65-.2.26-.34.54-.43.84-.09.3-.14.59-.15.87h4.88c-.04-.75-.24-1.32-.59-1.96zm.39 6.48c-.47.46-1.15.69-2.03.69-.63 0-1.17-.11-1.62-.34-.45-.23-.82-.52-1.1-.87-.28-.35-.48-.73-.59-1.14-.12-.42-.18-.82-.19-1.21h7.5c.02-1.2-.18-2.29-.67-3.27-.5-.97-1.16-1.76-1.98-2.36-.83-.6-1.76-.99-2.82-1.19-1.06-.19-2.13-.17-3.2.08v.01C11 8.76 10.3 9.34 9.78 10.1c-.52.77-.82 1.72-.82 2.84 0 1.09.26 2.04.77 2.84.51.8 1.18 1.45 2.01 1.93.83.48 1.77.72 2.82.72.57 0 1.12-.07 1.64-.22.53-.15 1-.37 1.42-.67.42-.3.77-.67 1.04-1.12.27-.44.42-.95.44-1.52h-2.38c-.11.59-.36 1.02-.83 1.48zM14.25 6.5h5.25V7.5H14.25z"/></svg></div>
+      <span class="contact-label">Behance</span><span class="contact-handle">SireenWadi</span>
+    </a>
+    <a href="mailto:serenanwar727@gmail.com" class="contact-card cc-email">
+      <div class="contact-icon-wrap"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div>
+      <span class="contact-label">Email</span><span class="contact-handle">serenanwar727</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span>© 2026</span><span class="footer-dot">·</span>
+    <span>Crafted with <span class="pk">♥</span> &amp; Code by <span class="bl">Sireen Wadi</span></span>
+    <span class="footer-dot">·</span><span class="lm">Cybersecurity Engineer</span>
+    <span class="footer-dot">·</span><span>Full-Stack Developer</span>
+    <span class="footer-dot">·</span><span>UI Architect</span>
+  </div>
+</footer>
+
+<script>
+/* CURSOR */
+const dot=document.getElementById('c-dot'),ring=document.getElementById('c-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px'});
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop)})();
+
+/* NAV SCROLL */
+const nav=document.getElementById('main-nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+/* NAV ACTIVE */
+const secs=['hero','projects','resume','contact'];
+const nls=document.querySelectorAll('.nav-links a');
+const nds=document.querySelectorAll('.nav-indicator .nav-dot');
+const sds=document.querySelectorAll('.hero-side .nav-dot');
+window.addEventListener('scroll',()=>{
+  let c=0;
+  secs.forEach((id,i)=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<160)c=i});
+  nls.forEach((a,i)=>a.classList.toggle('active',i===c));
+  nds.forEach((d,i)=>d.classList.toggle('active',i===c));
+  sds.forEach((d,i)=>d.classList.toggle('active',i===c));
+});
+
+/* SCROLL REVEAL */
+const io=new IntersectionObserver(e=>e.forEach(n=>{if(n.isIntersecting)n.target.classList.add('in')}),{threshold:.07});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ACCORDION */
+document.querySelectorAll('.acc-head').forEach(h=>{
+  h.addEventListener('click',()=>{
+    const item=h.closest('.acc-item'),wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.acc-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
+  });
+});
+
+/* SLIDERS */
+document.querySelectorAll('.proj-slider').forEach(slider=>{
+  let cur=0;
+  const track=slider.querySelector('.slider-track');
+  const dots=slider.querySelectorAll('.sl-dot');
+  const counter=slider.querySelector('.sl-counter');
+  const total=slider.querySelectorAll('.slide').length;
+  function goTo(n){cur=(n+total)%total;track.style.transform=`translateX(-${cur*100}%)`;dots.forEach((d,i)=>d.classList.toggle('active',i===cur));if(counter)counter.textContent=`${cur+1} / ${total}`}
+  slider.querySelector('.sl-prev').addEventListener('click',e=>{e.stopPropagation();goTo(cur-1)});
+  slider.querySelector('.sl-next').addEventListener('click',e=>{e.stopPropagation();goTo(cur+1)});
+  dots.forEach((d,i)=>d.addEventListener('click',e=>{e.stopPropagation();goTo(i)}));
+  let autoT;
+  const item=slider.closest('.acc-item');
+  new MutationObserver(()=>{clearInterval(autoT);if(item.classList.contains('open'))autoT=setInterval(()=>goTo(cur+1),4200)}).observe(item,{attributes:true,attributeFilter:['class']});
+  let tx=0;
+  slider.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});
+  slider.addEventListener('touchend',e=>{const d=tx-e.changedTouches[0].clientX;if(Math.abs(d)>40)goTo(d>0?cur+1:cur-1)});
+});
+
+/* MAGNETIC PILLS */
+document.querySelectorAll('.pill').forEach(p=>{
+  p.addEventListener('mousemove',e=>{const r=p.getBoundingClientRect();const x=e.clientX-r.left-r.width/2;const y=e.clientY-r.top-r.height/2;p.style.transform=`translateY(-4px) scale(1.06) translate(${x*.14}px,${y*.14}px)`});
+  p.addEventListener('mouseleave',()=>{p.style.transform=''});
+});
+
+/* CANVAS PARTICLES */
+(function(){
+  const cv=document.getElementById('cin-cv');if(!cv)return;
+  const ctx=cv.getContext('2d');let W,H,pts=[];
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;pts=Array.from({length:130},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.4+.4,c:Math.random()<.5?'0,200,255':Math.random()<.5?'255,45,120':'170,255,0'}))}
+  resize();new ResizeObserver(resize).observe(cv);
+  function draw(){ctx.clearRect(0,0,W,H);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(${p.c},.5)`;ctx.fill()});for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<88){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(0,200,255,${.04*(1-d/88)})`;ctx.lineWidth=.4;ctx.stroke()}}requestAnimationFrame(draw)}
+  draw();
+})();
+</script>
+
+<!--
+══════════════════════════════════════════════════════
+  IMAGE MANIFEST — sireen-portfolio-v4.html
+  (place this file in the same folder as all images)
+══════════════════════════════════════════════════════
+
+  SECTION BACKGROUNDS
+  ─────────────────────────────────────────────────────
+  image.jpg                                → #hero
+  solenedesjardins-sea-6553205.jpg         → #projects
+  schaferle-wave-1913559_1920.jpg          → #resume
+  michael_pointner-blue-9566138.jpg        → #contact
+
+  PROJECT 01 — ThreadCode
+  ─────────────────────────────────────────────────────
+  threadcode-storefront-home.jpg           → thumb + Slide 1
+  2.png                                    → Slide 2  (threadcode-product-grid)
+  10.png                                   → Slide 3  (threadcode-checkout-flow)
+
+  PROJECT 02 — MindSource
+  ─────────────────────────────────────────────────────
+  9.png                                    → thumb + Slide 1  (mindsource-ai-dashboard)
+  6.png                                    → Slide 2  (mindsource-learning-interface)
+  5.png                                    → Slide 3  (mindsource-neural-progress-map)
+
+  PROJECT 03 — Deep Core Intelligence
+  ─────────────────────────────────────────────────────
+  1q.jpg                                   → thumb + Slide 1  (deepcore-security-dashboard)
+  1.png                                    → Slide 2  (deepcore-threat-monitor)
+  2q.png                                   → Slide 3  (deepcore-encryption-audit-panel)
+
+  PROJECT 04 — NexusUI
+  ─────────────────────────────────────────────────────
+  Gemini_Generated_Image_ifbjpsifbjpsifbj.png  → thumb + Slide 1  (nexusui-component-library)
+  x.png                                    → Slide 2  (nexusui-design-token-system)
+  xx.png                                   → Slide 3  (nexusui-storybook-documentation)
+
+  PROJECT 05 — SmartInbox
+  ─────────────────────────────────────────────────────
+  w.png                                    → thumb + Slide 1  (smartinbox-email-dashboard)
+  ww.png                                   → Slide 2  (smartinbox-ai-categorization-engine)
+  www.png                                  → Slide 3  (smartinbox-analytics-overview)
+
+  PROJECT 06 — Akl Bet Kitchen
+  ─────────────────────────────────────────────────────
+  Gemini_Generated_Image_m1gh6vm1gh6vm1gh.png  → thumb + Slide 1  (aklbet-hero-homepage)
+  a.png                                    → Slide 2  (aklbet-menu-section)
+  a3.png                                   → Slide 3  (aklbet-reservation-contact)
+
+  TOTAL: 22 files  (4 section BGs + 18 project images)
+══════════════════════════════════════════════════════
+-->
+</body>
+</html>
